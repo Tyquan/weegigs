@@ -1,7 +1,8 @@
 import React from "react";
+import IndexPage from "./views/static/indexPage";
 
 const App = () => {
-    return <h1>React initiated!</h1>
+    return <IndexPage />
 }
 
 export default App;
