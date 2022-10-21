@@ -15,12 +15,12 @@ const AddGigForm = () => {
     const canSave = Boolean(title) && Boolean(company) && Boolean(userId);
 
     const usersOptions = users.map(user => (
-        <option key={user._id} value={user._id}>
-            {user.email}
+        <option key={user.id} value={user.id}>
+            {user.username}
         </option>
     ));
 
-    const changeGig = () => {
+    const saveGig = () => {
         if (title && company) {
             dispatch(gigAdded(title, company, userId));
             setTitle("");
@@ -43,7 +43,6 @@ const AddGigForm = () => {
                     <option value=""></option>
                     {usersOptions}
                 </select>
-                <input type="text" onChange={(e) => setTitle(e.target.value)} id="gigTitle" name="gigTitle" value={title} />
                 <br />
                 <button type="button" disabled={!canSave} onClick={saveGig}>Post Gig</button>
             </form>

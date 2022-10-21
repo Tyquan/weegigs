@@ -1,25 +1,33 @@
-import React from "react";
-import { useSelector } from 'react-redux';
-import { selectAllGigs } from '../gigSlice';
-import GigAuthor from "./GigAuthor";
-import GigTime from "./GigTime";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllGigs, fetchGigs, getGigsStatus, getGigsError } from '../gigSlice';
+import GigExcerpt from "./GigExcerpt";
 
 const GigsList = () => {
     const gigs = useSelector(selectAllGigs);
+    const gigsStatus = useSelector(getGigsStatus);
+    const gigsError = useSelector(getGigsError);
 
-    const orderedGigs = gigs.slice().sort((a,b) => b.creationDate.localeCompare(a.creationDate));
+    const dispatch = useDispatch();
 
-    const renderedGigs = orderedGigs.map(gig => (
-        <article key={gig._id}>
-            <h3>{gig.title}</h3>
-            <p id="gigCredit">
-                <GigAuthor company={gig.company} />
-                <br />
-                <GigTime time={gig.creationDate} />
-            </p>
-        </article>
-    ));
+    useEffect(() => {
+        if (gigsStatus === 'idle') {
+            dispatch(fetchGigs());
+        }
+    }, [gigsStatus, dispatch])
 
+    let renderedGigs;
+    if (gigsStatus === 'loading') {
+        renderedGigs = <p>Loading...</p>;
+    } else if (gigsStatus === 'succeeded') {
+        const orderedGigs = gigs.slice().sort((a,b) => b.creationDate.localeCompare(a.creationDate));
+        renderedGigs = orderedGigs.map(gig => (
+            <GigExcerpt gig={gig} key={gig.id} />
+        ));
+    } else if (gigsStatus === 'failed') {
+        renderedGigs = <p>{error}</p>;
+    }
+    
     return (
         <section id="gigsListComponent">
             <h1>GigsList</h1>
