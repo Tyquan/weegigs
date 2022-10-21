@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { gigAdded } from "../gigSlice";
+import { addNewGig } from "../gigSlice";
 import { selectAllUsers } from '../../users/userSlice';
 
 const AddGigForm = () => {
@@ -11,8 +11,9 @@ const AddGigForm = () => {
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [userId, setUserId] = useState('');
+    const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
-    const canSave = Boolean(title) && Boolean(company) && Boolean(userId);
+    const canSave = [title, company, userId].every(Boolean) && addRequestStatus === 'idle';
 
     const usersOptions = users.map(user => (
         <option key={user.id} value={user.id}>
@@ -21,10 +22,19 @@ const AddGigForm = () => {
     ));
 
     const saveGig = () => {
-        if (title && company) {
-            dispatch(gigAdded(title, company, userId));
-            setTitle("");
-            setCompany("");
+        if (canSave) {
+            try {
+                setAddRequestStatus('pending');
+                dispatch(addNewGig({title, company, userId})).unwrap();
+
+                setTitle('');
+                setCompany('');
+                setUserId('');
+            } catch (err) {
+                console.error('Failed to save the gig:', err);
+            } finally {
+                setAddRequestStatus('idle')
+            }
         }
     };
 
