@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAllGigs, fetchGigs, getGigsStatus, getGigsError } from '../gigSlice';
+import { selectAllGigs, fetchGigs, getGigsStatus, getGigsError } from '../gigsSlice';
 import GigExcerpt from "./GigExcerpt";
 
 const GigsList = () => {
@@ -27,7 +27,7 @@ const GigsList = () => {
     } else if (gigsStatus === 'failed') {
         renderedGigs = <p>{error}</p>;
     }
-    
+
     return (
         <section id="gigsListComponent">
             <h1>GigsList</h1>

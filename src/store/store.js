@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gigsReducer from '../features/gigs/gigSlice';
+import gigsReducer from '../features/gigs/gigsSlice';
 import usersReducer from '../features/users/userSlice';
 
 export default configureStore({

@@ -20,6 +20,16 @@ export const addNewGig = createAsyncThunk('gigs/addNewGig', async (initialGig) =
     return res.data;
 });
 
+export const updateGig = createAsyncThunk('gigs/updateGig', async (initialGig) => {
+    try {
+        const res = await axios.put(`${POST_URL}/${id}`);
+        if (res?.status === 200) return initialGig;
+        return `${res?.status}: ${res.statusText}`;
+    } catch (error) {
+        return err.message;
+    }
+});
+
 const gigSlice = createSlice({
     name: 'gigs',
     initialState,
