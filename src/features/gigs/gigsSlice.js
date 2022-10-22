@@ -105,6 +105,8 @@ export const selectAllGigs = (state) => state.gigs.gigs;
 export const getGigsStatus = (state) => state.gigs.status;
 export const getGigsError = (state) => state.gigs.error;
 
+export const selectGigById = (state, gigId) => state.gigs.gigs.find(gig => gig.id === gigId);
+
 export const { gigAdded, applicationAdded } = gigSlice.actions;
 
 export default gigSlice.reducer;
