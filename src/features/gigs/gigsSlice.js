@@ -24,7 +24,7 @@ export const updateGig = createAsyncThunk('gigs/updateGig', async (initialGig) =
     try {
         const res = await axios.put(`${POST_URL}/${id}`);
         if (res?.status === 200) return initialGig;
-        return `${res?.status}: ${res.statusText}`;
+        return `${res?.status}: ${res?.statusText}`;
     } catch (error) {
         return err.message;
     }
@@ -43,7 +43,7 @@ const gigSlice = createSlice({
                     payload: {
                         id: nanoid(),
                         title,
-                        creationDate: new Date().toString(),
+                        creationDate: new Date().toISOString(),
                         userId,
                         applications: []
                     }
@@ -85,9 +85,18 @@ const gigSlice = createSlice({
                 action.payload._id = sortedGigs[sortedGigs.length - 1]._id + 1;
 
                 action.payload.userId = Number(action.payload.userId);
-                action.payload.creationDate = new Date().toString();
+                action.payload.creationDate = new Date().toISOString();
 
                 state.gigs.push(action.payload);
+            })
+            .addCase(updateGig.fulfilled, (state, action) => {
+                if (!action.payload.id) {
+                    return;
+                }
+                const { id } = action.payload;
+                action.payload.creationDate = new Date().toISOString();
+                const gigs = state.gigs.filter(gig => gig.id !== id);
+                state.gigs = [...gigs, action.payload];
             })
     }
 });
@@ -99,15 +108,3 @@ export const getGigsError = (state) => state.gigs.error;
 export const { gigAdded, applicationAdded } = gigSlice.actions;
 
 export default gigSlice.reducer;
-
-
-/*
-const initialState = [
-    {_id: 1, userId: 1, title: "Test Gig 1", company: "Facebook", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-    {_id: 2, userId: 2, title: "Test Gig 2", company: "Maker", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-    {_id: 3, userId: 3, title: "Test Gig 3", company: "Google", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-    {_id: 4, userId: 1, title: "Test Gig 4", company: "Netflix", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-    {_id: 5, userId: 2, title: "Test Gig 5", company: "IBM", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-    {_id: 6, userId: 3, title: "Test Gig 6", company: "Verizon", creationDate: sub(new Date(), { minutes: 10 }).toString(), applications: [] },
-];
-*/
