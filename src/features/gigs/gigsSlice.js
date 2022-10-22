@@ -20,7 +20,19 @@ export const addNewGig = createAsyncThunk('gigs/addNewGig', async (initialGig) =
     return res.data;
 });
 
+export const deleteGig = createAsyncThunk('gigs/deleteGig', async (initialGig) => {
+    const {id} = initialGig;
+    try {
+        const res = await axios.delete(`${POST_URL}/${id}`);
+        if (res?.status === 200) return initialGig;
+        return `${res?.status}: ${res?.statusText}`;
+    } catch (error) {
+        return error.message;
+    }
+});
+
 export const updateGig = createAsyncThunk('gigs/updateGig', async (initialGig) => {
+    const {id} = initialGig;
     try {
         const res = await axios.put(`${POST_URL}/${id}`);
         if (res?.status === 200) return initialGig;
@@ -97,6 +109,14 @@ const gigSlice = createSlice({
                 action.payload.creationDate = new Date().toISOString();
                 const gigs = state.gigs.filter(gig => gig.id !== id);
                 state.gigs = [...gigs, action.payload];
+            })
+            .addCase(deleteGig.fulfilled, (state, action) => {
+                if (!action.payload?.id) {
+                    return;
+                }
+                const {id} = action.payload;
+                const gigs = state.gigs.filter(gig => gig.id !== id);
+                state.gigs = gigs;
             })
     }
 });
