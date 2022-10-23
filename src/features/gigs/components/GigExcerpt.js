@@ -6,6 +6,7 @@ const GigExcerpt = ({ gig }) => {
     return (
         <article>
             <h3>{gig.title}</h3>
+            <p>{gig.body.substring(0, 100)}...</p>
             <p id="gigCredit">
                 <GigAuthor company={gig.company} />
                 <br />
