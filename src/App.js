@@ -13,7 +13,7 @@ const App = () => {
                 <Route index element={<IndexPage />} />
                 <Route path="gig">
                     <Route index element={<AddGigPage />} />
-                    <Route path=":postId" element={<SingleGigPage />} />
+                    <Route path=":gigId" element={<SingleGigPage />} />
                 </Route>
             </Route>
         </Routes>
