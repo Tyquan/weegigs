@@ -12,7 +12,7 @@ const GigExcerpt = ({ gig }) => {
                 <span><Link to={`gig/${gig.id}`}>View Gig</Link></span>
             </p>
             <p id="gigCredit">
-                <GigAuthor company={gig.company} />
+                <GigAuthor userId={gig.userId} />
                 <br />
                 <GigTime time={gig.creationDate} />
             </p>

@@ -14,11 +14,11 @@ const EditGigForm = () => {
     const users = useSelector(selectAllUsers);
 
     const [title, setTitle] = useState(gig?.title);
-    const [company, setCompany] = useState(gig?.body);
+    const [body, setBody] = useState(gig?.body);
     const [userId, setUserId] = useState(gig?.userId);
     const [requestStatus, setRequestStatus] = useState('idle');
 
-    const canSave = [title, company, userId].every(Boolean) && requestStatus === 'idle';
+    const canSave = [title, body, userId].every(Boolean) && requestStatus === 'idle';
 
     const onSaveGig = () => {
         if (canSave) {
@@ -26,11 +26,11 @@ const EditGigForm = () => {
                 setRequestStatus('pending');
                 // send updated data through redux
                 dispatch(updateGig({
-                    id: gig.id, title, company, userId
+                    id: gig.id, title, body, userId
                 })).unwrap();
 
                 setTitle('');
-                setCompany('');
+                setBody('');
                 setUserId('');
                 // send user to the gig after updating it
                 navigate(`/gig/${gigId}`);
@@ -49,7 +49,7 @@ const EditGigForm = () => {
             dispatch(deleteGig({ id: gig.id })).unwrap();
 
             setTitle('');
-            setCompany('');
+            setBody('');
             setUserId('');
             // send user to the main page
             navigate(`/`);
@@ -72,8 +72,8 @@ const EditGigForm = () => {
                 <label htmlFor='gigTitle'>Gig Title: </label>
                 <input type="text" onChange={(e) => setTitle(e.target.value)} id="gigTitle" name="gigTitle" value={title} />
                 <br />
-                <label htmlFor='gigCompany'>Gig Company: </label>
-                <input type="text" onChange={(e) => setCompany(e.target.value)} id="gigComapny" name="gigCompany" value={company} />
+                <label htmlFor='gigBody'>Gig body: </label>
+                <textarea onChange={(e) => setBody(e.target.value)} id="gigBody" name="gigBody" value={body}></textarea>
                 <br />
                 <label htmlFor='gigAuthor'>Author: </label>
                 <select id="gigAuthor" value={userId} onChange={(e) => setUserId(e.target.value)}>

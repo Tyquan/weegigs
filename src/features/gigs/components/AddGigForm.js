@@ -11,11 +11,11 @@ const AddGigForm = () => {
     const users = useSelector(selectAllUsers);
 
     const [title, setTitle] = useState('');
-    const [company, setCompany] = useState('');
+    const [body, setBody] = useState('');
     const [userId, setUserId] = useState('');
     const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
-    const canSave = [title, company, userId].every(Boolean) && addRequestStatus === 'idle';
+    const canSave = [title, body, userId].every(Boolean) && addRequestStatus === 'idle';
 
     const usersOptions = users.map(user => (
         <option key={user.id} value={user.id}>
@@ -27,10 +27,10 @@ const AddGigForm = () => {
         if (canSave) {
             try {
                 setAddRequestStatus('pending');
-                dispatch(addNewGig({title, company, userId})).unwrap();
+                dispatch(addNewGig({title, body, userId})).unwrap();
 
                 setTitle('');
-                setCompany('');
+                setBody('');
                 setUserId('');
 
                 navigate('/');
@@ -49,8 +49,8 @@ const AddGigForm = () => {
                 <label>Gig Title: </label>
                 <input type="text" onChange={(e) => setTitle(e.target.value)} id="gigTitle" name="gigTitle" value={title} />
                 <br />
-                <label>Gig Company: </label>
-                <input type="text" onChange={(e) => setCompany(e.target.value)} id="gigComapny" name="gigCompany" value={company} />
+                <label>Gig Body: </label>
+                <textarea onChange={(e) => setBody(e.target.value)} id="gigBody" name="gigBody" value={body}></textarea>
                 <br />
                 <label>Author: </label>
                 <select id="gigauthor" value={userId} onChange={(e) => setUserId(e.target.value)}>

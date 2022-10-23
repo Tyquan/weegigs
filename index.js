@@ -4,8 +4,10 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './src/App';
 import store from "./src/store/store";
+import { fetchGigs } from './src/features/gigs/gigsSlice';
 import { fetchUsers } from './src/features/users/userSlice';
 
+store.dispatch(fetchGigs());
 store.dispatch(fetchUsers());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

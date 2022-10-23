@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAllGigs, fetchGigs, getGigsStatus, getGigsError } from '../gigsSlice';
+import React from "react";
+import { useSelector } from 'react-redux';
+import { selectAllGigs, getGigsStatus, getGigsError } from '../gigsSlice';
 import GigExcerpt from "./GigExcerpt";
 
 const GigsList = () => {
     const gigs = useSelector(selectAllGigs);
     const gigsStatus = useSelector(getGigsStatus);
     const gigsError = useSelector(getGigsError);
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (gigsStatus === 'idle') {
-            dispatch(fetchGigs());
-        }
-    }, [gigsStatus, dispatch])
 
     let renderedGigs;
     if (gigsStatus === 'loading') {
@@ -25,7 +17,7 @@ const GigsList = () => {
             <GigExcerpt gig={gig} key={gig.id} />
         ));
     } else if (gigsStatus === 'failed') {
-        renderedGigs = <p>{error}</p>;
+        renderedGigs = <p>{gigsError}</p>;
     }
 
     return (
