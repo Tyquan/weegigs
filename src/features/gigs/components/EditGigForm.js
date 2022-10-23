@@ -14,7 +14,7 @@ const EditGigForm = () => {
     const users = useSelector(selectAllUsers);
 
     const [title, setTitle] = useState(gig?.title);
-    const [company, setCompany] = useState(gig?.company);
+    const [company, setCompany] = useState(gig?.body);
     const [userId, setUserId] = useState(gig?.userId);
     const [requestStatus, setRequestStatus] = useState('idle');
 
@@ -46,7 +46,7 @@ const EditGigForm = () => {
         try {
             setRequestStatus('pending');
             // send deleted data through redux
-            dispatch(updateGig({ id: gig.id })).unwrap();
+            dispatch(deleteGig({ id: gig.id })).unwrap();
 
             setTitle('');
             setCompany('');

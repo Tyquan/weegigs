@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 import { addNewGig } from "../gigsSlice";
 import { selectAllUsers } from '../../users/userSlice';
 
 const AddGigForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const users = useSelector(selectAllUsers);
 
     const [title, setTitle] = useState('');
@@ -30,6 +32,8 @@ const AddGigForm = () => {
                 setTitle('');
                 setCompany('');
                 setUserId('');
+
+                navigate('/');
             } catch (err) {
                 console.error('Failed to save the gig:', err);
             } finally {

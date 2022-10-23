@@ -23,7 +23,7 @@ export const addNewGig = createAsyncThunk('gigs/addNewGig', async (initialGig) =
 export const deleteGig = createAsyncThunk('gigs/deleteGig', async (initialGig) => {
     const {id} = initialGig;
     try {
-        const res = await axios.delete(`${POST_URL}/${id}`);
+        const res = await axios.delete(`${POSTS_URL}/${id}`);
         if (res?.status === 200) return initialGig;
         return `${res?.status}: ${res?.statusText}`;
     } catch (error) {
@@ -34,11 +34,11 @@ export const deleteGig = createAsyncThunk('gigs/deleteGig', async (initialGig) =
 export const updateGig = createAsyncThunk('gigs/updateGig', async (initialGig) => {
     const {id} = initialGig;
     try {
-        const res = await axios.put(`${POST_URL}/${id}`);
+        const res = await axios.put(`${POSTS_URL}/${id}`);
         if (res?.status === 200) return initialGig;
         return `${res?.status}: ${res?.statusText}`;
     } catch (error) {
-        return err.message;
+        return error.message;
     }
 });
 
