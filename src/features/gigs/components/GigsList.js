@@ -30,7 +30,6 @@ const GigsList = () => {
 
     return (
         <section id="gigsListComponent">
-            <h1>GigsList</h1>
             {renderedGigs}
         </section>
     );

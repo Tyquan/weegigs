@@ -6,7 +6,7 @@ import GigTime from "./GigTime";
 const GigExcerpt = ({ gig }) => {
     return (
         <article>
-            <h3>{gig.title}</h3>
+            <h2>{gig.title}</h2>
             <p>
                 {gig.body.substring(0, 100)}...
                 <span><Link to={`gig/${gig.id}`}>View Gig</Link></span>

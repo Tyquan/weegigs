@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import StaticHeader from '../../components/StaticHeader';
 import GigAuthor from '../../features/gigs/components/GigAuthor';
 import GigTime from '../../features/gigs/components/GigTime';
@@ -24,6 +24,7 @@ const SingleGigPage = () => {
             <h2>{gig.title}</h2>
             <p>{gig.body}</p>
             <p id="gigCredit">
+                <Link to={`/gig/edit/${gig.id}`}>Edit Gig</Link>
                 <GigAuthor company={gig.company} />
                 <GigTime time={gig.creationDate} />
             </p>
